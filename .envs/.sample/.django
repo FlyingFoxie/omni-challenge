@@ -1,0 +1,4 @@
+# General
+# ------------------------------------------------------------------------------
+DJANGO_SETTINGS_MODULE=kami_airlines.settings.production
+DATABASE_URL=postgresql://<user>:<password>@postgres:5432/kami_airlines
