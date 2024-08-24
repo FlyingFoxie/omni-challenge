@@ -4,10 +4,18 @@ from .constants import EMPLOYEE_STATUS_CHOICES
 from .models import Company, Employee
 
 
+def dynamic_columns_serializer(dynamic_columns: list, serializer):
+    class DynamicColumnsSerializer(serializer):
+        class Meta(serializer.Meta):
+            fields = dynamic_columns + serializer.Meta.fields
+
+    return DynamicColumnsSerializer
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        exclude = ["id", "company", "created_datetime", "updated_datetime"]
+        fields = ["first_name", "last_name", "email_address", "contact_number"]
 
 
 class EmployeeQuerySerializer(serializers.Serializer):

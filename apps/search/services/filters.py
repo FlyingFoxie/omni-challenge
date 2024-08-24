@@ -5,7 +5,7 @@ def employee_filter(queryset: QuerySet, **kwargs) -> QuerySet:
     filters = Q()
 
     field_mappings = {
-        "company": "company__id",
+        "company": "company",
         "status": "status",
         "location": "location__icontains",
         "position": "position__icontains",
