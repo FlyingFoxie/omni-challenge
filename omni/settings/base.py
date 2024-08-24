@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# DATABASES = {"default": env.db("DATABASE_URL")}
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # django apps #
-    # "airlines",
     "apps.search",
     # third party apps #
     "rest_framework",
