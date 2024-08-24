@@ -27,3 +27,11 @@ def two_organizations():
         EmployeeFactory.create_batch(random.randint(1, 10), company=company)
 
     return organizations
+
+
+@pytest.fixture
+def one_organization_one_company_thirty_employees():
+    organization = OrganizationFactory()
+    company = CompanyFactory(organization=organization)
+    EmployeeFactory.create_batch(30, company=company)
+    return organization

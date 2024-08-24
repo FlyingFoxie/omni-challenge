@@ -128,3 +128,23 @@ class TestEmployeeListView:
 
         assert response.status_code == 200
         assert response.json()["count"] == employee_objects.count()
+
+    def test_pagination(
+        self, client, random_ip, one_organization_one_company_thirty_employees
+    ):
+        client.force_login(one_organization_one_company_thirty_employees.user)
+        response = client.get(
+            reverse("search:employee"),
+            headers={"X-Forwarded-For": random_ip},
+        )
+        response_data = response.json()
+        assert response.status_code == 200
+        assert response_data["next"] is not None
+
+        next_page_response = client.get(
+            response_data["next"],
+            headers={"X-Forwarded-For": random_ip},
+        )
+        next_page_response_data = next_page_response.json()
+        assert next_page_response.status_code == 200
+        assert next_page_response_data["next"] is None
