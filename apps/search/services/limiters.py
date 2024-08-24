@@ -1,5 +1,26 @@
+from functools import wraps
+
 from django.core.cache import cache
 from django.utils import timezone
+from rest_framework.response import Response
+
+
+def rate_limit(rate_limit_class, rate_limit, time_period):
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(self, request, *args, **kwargs):
+            rate_limiter = rate_limit_class(rate_limit, time_period)
+
+            if rate_limiter.is_rate_limited(request):
+                return Response(
+                    {"detail": "Rate limit exceeded. Try again later."}, status=429
+                )
+
+            return view_func(self, request, *args, **kwargs)
+
+        return _wrapped_view
+
+    return decorator
 
 
 class CustomRateLimit:

@@ -4,10 +4,9 @@ from uuid import UUID
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
 
 from apps.search.services.filters import employee_filter
-from apps.search.services.limiters import CustomRateLimit
+from apps.search.services.limiters import CustomRateLimit, rate_limit
 from apps.search.services.paginations import CustomPageNumberPagination
 
 from .constants import EMPLOYEE_STATUS_CHOICES
@@ -58,14 +57,8 @@ class EmployeeListView(ListAPIView):
     RATE_LIMIT = 10  # Number of allowed requests
     TIME_PERIOD = timedelta(minutes=1)  # Time period for rate limiting
 
+    @rate_limit(rate_limit_class, RATE_LIMIT, TIME_PERIOD)
     def get(self, request, *args, **kwargs):
-        rate_limiter = self.rate_limit_class(self.RATE_LIMIT, self.TIME_PERIOD)
-
-        if rate_limiter.is_rate_limited(request):
-            return Response(
-                {"detail": "Rate limit exceeded. Try again later."}, status=429
-            )
-
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
