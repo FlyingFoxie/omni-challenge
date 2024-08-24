@@ -2,10 +2,10 @@ from django import forms
 from django.contrib import admin
 
 from .constants import COLUMN_CHOICES
-from .models import Company, Employee
+from .models import Company, Employee, Organization
 
 
-class CompanyForm(forms.ModelForm):
+class OrganizationForm(forms.ModelForm):
     display_columns = forms.MultipleChoiceField(
         choices=[(key, value) for key, value in COLUMN_CHOICES.items()],
         widget=forms.CheckboxSelectMultiple,
@@ -13,13 +13,14 @@ class CompanyForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Company
+        model = Organization
         fields = "__all__"
 
 
-class CompanyAdmin(admin.ModelAdmin):
-    form = CompanyForm
+class OrganizationAdmin(admin.ModelAdmin):
+    form = OrganizationForm
 
 
 admin.site.register(Employee)
-admin.site.register(Company, CompanyAdmin)
+admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(Company)

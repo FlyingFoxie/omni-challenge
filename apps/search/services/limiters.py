@@ -41,7 +41,6 @@ class CustomRateLimit:
         cache_key = f"rl:{client_ip}"
         request_times = cache.get(cache_key, [])
 
-        # Remove old requests that are outside the time period
         request_times = [
             t for t in request_times if t > timezone.now() - self.time_period
         ]
