@@ -3,19 +3,11 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
-from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.permissions import AllowAny
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", RedirectView.as_view(pattern_name="api-docs")),
 ]
-
-
-@permission_classes([AllowAny])
-@authentication_classes([])
-def schema_view():
-    return SpectacularAPIView.as_view()
 
 
 # API URLS

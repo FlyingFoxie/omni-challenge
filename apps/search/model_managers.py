@@ -1,9 +1,9 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 
 
 class EmployeeManager(models.Manager):
-    def get_list_by_organization_and_filters(self, organization, **kwargs):
+    def get_list_by_organization_and_filters(self, organization, **kwargs) -> QuerySet:
         filters = Q()
 
         field_mappings = {

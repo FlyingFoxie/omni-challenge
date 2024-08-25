@@ -156,4 +156,11 @@ SPECTACULAR_SETTINGS = {
     "SERVERS": [
         {"url": "http://127.0.0.1:8000", "description": "Local Development server"}
     ],
+    "AUTHENTICATION_WHITELIST": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "SECURITY": [
+        {"BasicAuth": []},  # Basic authentication
+    ],
 }

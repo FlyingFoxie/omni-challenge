@@ -7,6 +7,7 @@
 
 ## Table of Contents
 1. [About](#about)
+   1. [Technologies Used](#technologies-used)
 2. [Getting Up and Running Locally](#getting-up-and-running-locally)
    1. [Running Test and Coverage Report](#running-test-and-coverage-report)
 3. [Getting Up and Running Locally With Docker](#getting-up-and-running-locally-with-docker)
@@ -27,6 +28,12 @@ The `/api/v1/employee/` endpoint supports several query parameters:
 3. **location**: Filters the employee list by location.
 4. **position**: Filters the employee list by job position.
 5. **department**: Filters the employee list by department.
+
+### Technologies Used
+
+- API Server: [Django REST Framework](https://www.django-rest-framework.org/)
+- Testing: [pytest](https://pytest.org/)
+- Linting: black, flake8, isort
 
 ## Getting Up and Running Locally
 
