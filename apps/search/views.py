@@ -5,9 +5,6 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
 
-from apps.search.services.limiters import CustomRateLimit, rate_limit
-from apps.search.services.paginations import CustomPageNumberPagination
-
 from .constants import EMPLOYEE_STATUS_CHOICES
 from .models import Employee
 from .serializers import (
@@ -15,6 +12,9 @@ from .serializers import (
     EmployeeSerializer,
     dynamic_columns_serializer,
 )
+from .services.cache_utils import cache_queryset
+from .services.limiters import CustomRateLimit, rate_limit
+from .services.paginations import CustomPageNumberPagination
 
 
 @extend_schema(
@@ -59,6 +59,7 @@ class EmployeeListView(ListAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
+    @cache_queryset(timeout=60)
     def get_queryset(self):
         serializer = EmployeeQuerySerializer(data=self.request.query_params)
         if serializer.is_valid():
