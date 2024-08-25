@@ -1,8 +1,8 @@
 # define an alias for the specific python version used in this file.
-FROM python:3.12-slim-bullseye as python
+FROM python:3.12-slim-bullseye AS python
 
 # Python build stage
-FROM python as python-build-stage
+FROM python AS python-build-stage
 
 ARG BUILD_ENVIRONMENT=production
 
@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 
 # Python 'run' stage
-FROM python as python-run-stage
+FROM python AS python-run-stage
 
 ARG BUILD_ENVIRONMENT=local
 ARG APP_HOME=/app
@@ -80,4 +80,7 @@ ENV PATH="/root/.local/bin:$PATH"
 RUN poetry config virtualenvs.in-project true
 RUN poetry install --with production
 
-ENTRYPOINT ["/start"]
+# Activate the virtual environment by adjusting the PATH
+ENV PATH="/app/.venv/bin:$PATH"
+
+#ENTRYPOINT ["/start"]
