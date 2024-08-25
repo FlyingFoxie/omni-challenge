@@ -13,6 +13,7 @@
 3. [Getting Up and Running Locally With Docker](#getting-up-and-running-locally-with-docker)
    1. [Running Test and Coverage Report With Docker](#running-test-and-coverage-report-with-docker)
 4. [Existing Coverage Report in this REPO](#existing-coverage-report-in-this-repo)
+5. [Development](#development)
 
 ---
 
@@ -150,4 +151,47 @@ omni/urls.py                                                                13  
 --------------------------------------------------------------------------------------------
 TOTAL                                                                      335      6    98%
 
+```
+
+## Development
+
+### 1. Custom limiters
+
+Custom limiters was used instead of django rest framework built in limiters.
+
+```python
+from apps.search.services.limiters import CustomRateLimit, rate_limit
+
+class EmployeeListView(ListAPIView):
+    rate_limit_class = CustomRateLimit
+
+    RATE_LIMIT = 10  # Number of allowed requests
+    TIME_PERIOD = timedelta(minutes=1)  # Time period for rate limiting
+   ...
+    @rate_limit(rate_limit_class, RATE_LIMIT, TIME_PERIOD)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+```
+
+This limiter throttle 10 requests per minute based on ip address.
+```python
+class CustomRateLimit:
+    ...
+     def is_rate_limited(self, request):
+        """Check if rate limit is exceeded"""
+        client_ip = self.get_client_ip(request)
+        cache_key = f"rl:{client_ip}"
+        request_times = cache.get(cache_key, [])
+
+        request_times = [
+            t for t in request_times if t > timezone.now() - self.time_period
+        ]
+
+        if len(request_times) >= self.rate_limit:
+            return True
+
+        request_times.append(timezone.now())
+        cache.set(cache_key, request_times, self.time_period.total_seconds())
+        return False
 ```
