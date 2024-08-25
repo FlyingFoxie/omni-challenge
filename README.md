@@ -10,6 +10,7 @@
 2. [Getting Up and Running Locally](#getting-up-and-running-locally)
    1. [Running Test and Coverage Report](#running-test-and-coverage-report)
 3. [Getting Up and Running Locally With Docker](#getting-up-and-running-locally-with-docker)
+   1. [Running Test and Coverage Report With Docker](#running-test-and-coverage-report-with-docker)
 4. [Existing Coverage Report in this REPO](#existing-coverage-report-in-this-repo)
 
 ---
@@ -19,7 +20,7 @@
 This microservice provides an API endpoint for listing employees within an organization. The primary goal is to allow
 users to retrieve employee data efficiently based on various criteria.
 
-The EmployeeListView endpoint supports several query parameters:
+The `/api/v1/employee/` endpoint supports several query parameters:
 
 1. **company**: Filters the employee list by the company's UUID.
 2. **status**: Filters the employee list by their employment status.
@@ -32,7 +33,7 @@ The EmployeeListView endpoint supports several query parameters:
 To set up the local development environment with all necessary dependencies, run the following command in your virtual
 environment :
 ```bash
-$ poetry install --with dev
+poetry install --with dev
 ```
 If you do not have Poetry installed, you can follow the [Poetry installation guide](https://python-poetry.org/docs/#installation)
 to get it set up on your system.
@@ -40,17 +41,23 @@ to get it set up on your system.
 **(Optional)** After initializing your Git repository, you can optionally set up a pre-commit hook to automatically format
 and lint your code before each commit. .
 ```bash
-$ pre-commit install
+pre-commit install
 ```
 
 Apply migrations and run django server. (sqlite3 database will be used for simplicity of setting up and running locally)
 ```bash
-$ python manage.py migrate
-$ python manage.py runserver
+python manage.py migrate
+python manage.py runserver
 ```
 
 Now that the server's running, visit http://127.0.0.1:8000/ with your web browser. You'll be redirected to the [swagger
 api docs page](http://127.0.0.1:8000/api/docs).
+
+To test the API endpoint, create a superuser to obtain auth-token and authorize in the Swagger Docs, or simply login the
+django admin.
+```bash
+python manage.py createsuperuser
+```
 
 ### Running Test and Coverage Report
 
@@ -58,7 +65,7 @@ This project uses the [Pytest](https://docs.pytest.org/en/latest/example/simple.
 to run locally, run the following commands for testing result:
 
 ```bash
-$ make coverage_report
+make coverage_report
 ```
 
 ---
@@ -85,18 +92,24 @@ Reference can be made from sample folder .envs/.sample .
 
 Once the environment files are configures, run the `make` command to build and run the stack.
 ```bash
-$ make docker_build
+make docker_build
 ```
 
 Once the build is complete, visit http://127.0.0.1:8000/ with your web browser. You'll be redirected to the [swagger
 api docs page](http://127.0.0.1:8000/api/docs).
 
-### Running Test and Coverage Report
+To test the API endpoint, create a superuser to obtain auth-token and authorize in the Swagger Docs, or simply login the
+django admin.
+```bash
+make docker_django_createsuperuser
+```
+
+### Running Test and Coverage Report With Docker
 
 Run the `make` command to test and generate coverage report.
 
 ```Bash
-$ make docker_django_coverage_report
+make docker_django_coverage_report
 ```
 
 ## Existing Coverage Report in this REPO
