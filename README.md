@@ -76,8 +76,6 @@ to run locally, run the following commands for testing result:
 make coverage_report
 ```
 
----
-
 ## Getting Up and Running Locally With Docker
 
 Prerequisites:
