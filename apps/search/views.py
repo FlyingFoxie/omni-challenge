@@ -71,7 +71,10 @@ class EmployeeListView(ListAPIView):
         return queryset
 
     def get_serializer_class(self):
-        if self.request.user.is_anonymous:
+        if (
+            self.request.user.is_anonymous
+            or not self.request.user.organizations.exists()
+        ):
             return self.serializer_class
         else:
             return dynamic_columns_serializer(
