@@ -10,8 +10,10 @@ def cache_queryset(timeout=60):
             """
             TODO: Remove cache_key when there is changes in Employee model
             """
-
-            cache_key = f"{self.__class__.__name__}_{self.request.user.id}_{self.request.query_params.urlencode()}"
+            cache_key = (
+                f"{self.__class__.__name__}_{self.request.user.id}_"
+                f"{self.request.user.organizations.first().id}_{self.request.query_params.urlencode()}"
+            )
             cached_queryset = cache.get(cache_key)
             if cached_queryset is not None:
                 return cached_queryset
