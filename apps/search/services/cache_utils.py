@@ -10,6 +10,9 @@ def cache_queryset(timeout=60):
             """
             TODO: Remove cache_key when there is changes in Employee model
             """
+            if not self.request.user.organizations.exists():
+                return func(self, *args, **kwargs)
+
             cache_key = (
                 f"{self.__class__.__name__}_{self.request.user.id}_"
                 f"{self.request.user.organizations.first().id}_{self.request.query_params.urlencode()}"
