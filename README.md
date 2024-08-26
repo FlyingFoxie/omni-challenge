@@ -136,21 +136,21 @@ apps/search/model_managers.py                                               11  
 apps/search/models.py                                                       37      3    92%
 apps/search/serializers.py                                                  18      0   100%
 apps/search/services/__init__.py                                             0      0   100%
-apps/search/services/limiters.py                                            34      0   100%
+apps/search/services/cache_utils.py                                         17      1    94%
+apps/search/services/limiters.py                                            35      0   100%
 apps/search/services/paginations.py                                          6      0   100%
 apps/search/tests/__init__.py                                                0      0   100%
 apps/search/tests/conftest.py                                               22      0   100%
 apps/search/tests/factories.py                                              35      0   100%
-apps/search/tests/test_views.py                                             68      0   100%
+apps/search/tests/test_views.py                                             65      0   100%
 apps/search/urls.py                                                          4      0   100%
-apps/search/views.py                                                        30      2    93%
+apps/search/views.py                                                        32      2    94%
 omni/__init__.py                                                             0      0   100%
 omni/settings/base.py                                                       24      0   100%
 omni/settings/test.py                                                        1      0   100%
-omni/urls.py                                                                13      1    92%
+omni/urls.py                                                                 7      0   100%
 --------------------------------------------------------------------------------------------
-TOTAL                                                                      335      6    98%
-
+TOTAL                                                                      346      6    98%
 ```
 
 ## Development
