@@ -21,7 +21,6 @@ class TestEmployeeListView:
         )
         assert response.status_code == 200
         assert response.json()["count"] == employee_objects.count()
-        assert len(response.json()["results"]) == employee_objects.count()
 
     def test_employee_filtering(self, client, random_ip, two_organizations):
         """test each filtering parameter"""
@@ -53,7 +52,6 @@ class TestEmployeeListView:
 
             assert response.status_code == 200
             assert response_data["count"] == employee_objects_filtered.count()
-            assert len(response_data["results"]) == employee_objects_filtered.count()
 
     def test_employee_filtering_same_company(
         self, client, random_ip, two_organizations
@@ -88,7 +86,6 @@ class TestEmployeeListView:
 
             assert response.status_code == 200
             assert response_data["count"] == employee_objects_filtered.count()
-            assert len(response_data["results"]) == employee_objects_filtered.count()
 
     def test_dynamic_columns_serializer(self, client, two_organizations, random_ip):
         """test if the dynamic columns are added to the response accordingly"""

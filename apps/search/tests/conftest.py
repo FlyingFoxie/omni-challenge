@@ -21,10 +21,10 @@ def two_organizations():
     )
 
     for company in companies_organizations_a:
-        EmployeeFactory.create_batch(random.randint(1, 10), company=company)
+        EmployeeFactory.create_batch(random.randint(21, 30), company=company)
 
     for company in companies_organizations_b:
-        EmployeeFactory.create_batch(random.randint(1, 10), company=company)
+        EmployeeFactory.create_batch(random.randint(21, 30), company=company)
 
     return organizations
 

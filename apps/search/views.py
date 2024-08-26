@@ -12,7 +12,6 @@ from .serializers import (
     EmployeeSerializer,
     dynamic_columns_serializer,
 )
-from .services.cache_utils import cache_queryset
 from .services.limiters import CustomRateLimit, rate_limit
 from .services.paginations import CustomPageNumberPagination
 
@@ -59,7 +58,7 @@ class EmployeeListView(ListAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
-    @cache_queryset(timeout=60)
+    # @cache_queryset(timeout=60)
     def get_queryset(self):
         serializer = EmployeeQuerySerializer(data=self.request.query_params)
         if serializer.is_valid():
